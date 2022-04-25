@@ -35,7 +35,6 @@ export const Controller = ((model, view) => {
     const updateTodo = () => {
         const editbuttons = document.getElementsByClassName(view.domstr.editbutton);
         const completebuttons = document.getElementsByClassName(view.domstr.completebutton);
-        const editInputs = document.getElementsByClassName(view.domstr.editinput);
 
         for (const editbutton of editbuttons) {
             editbutton.addEventListener("click", (event) => {
@@ -46,27 +45,17 @@ export const Controller = ((model, view) => {
                 const list = state.todolist;
                 list[index] = todo;
                 state.todolist = list;
-            });
-        }
 
-        for (const input of editInputs) {
-            input.addEventListener("keyup", (event) => {
-                const id = event.currentTarget.id;
-                console.log(id);
-                const newtodo = new model.Todo(event.target.value, false, false);
+                const editInput = document.querySelector(`#input-${id}`);
+                console.log(editInput);
+                editInput.addEventListener("keyup", (event) => {
+                    if (event.key === "Enter") {
+                        todo.isEditing = false;
+                        const newtodo = new model.Todo(event.target.value, false, false);
 
-                model.editTodo(id, newtodo).then(todo => {
-                    console.log(todo);
-                    // state.todolist = todolist;
+                        model.editTodo(id, newtodo);
+                    }
                 });
-                event.target.value = "";
-                // const todo = state.getTodo(id);
-                // todo.isEditing = true;
-                // const index = state.todolist.findIndex(todo => +todo.id === +id);
-                // const list = state.todolist;
-                // list[index] = todo;
-                // state.todolist = list;
-                // console.log(todo);
             });
         }
 
@@ -87,7 +76,6 @@ export const Controller = ((model, view) => {
     const init = () => {
         model.getTodos().then((todolist) => {
             state.todolist = todolist.map(todo => ({ ...todo, isEditing: false })).reverse();
-            console.log(state.todolist);
             deleteTodo();
             updateTodo();
         });

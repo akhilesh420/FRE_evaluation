@@ -101,7 +101,7 @@ input, textarea {
 
 .todo-item {
     color: var(--color-light);
-    padding: 0px 8px;
+    padding: 0px 8px 0px 0px;
 }
 
 .todo-item-container {
@@ -120,6 +120,7 @@ input, textarea {
     border: 2px solid var(--color-dark);
     background-color: var(--color-light);
     cursor: pointer;
+    margin-right: 8px;
 }
 
 .complete {
@@ -131,6 +132,10 @@ input, textarea {
 .dlebtn, .editbtn {
     height: 18px;
     width: 18px;
+}
+
+.editbtn {
+    margin-left: 8px;
 }
 
 svg {
@@ -146,11 +151,12 @@ svg {
 .edit-todo {
     width: 100%;
     border-radius: unset;
-    color: var(--color-light);
-    padding: 0px 8px;
+    color: var(--color-dark);
+    padding: 0px 2px;
     border-bottom: unset;
     font-size: unset;
     white-space: pre-wrap;
+    background-color: var(--color-light);
 }
 
 .hide {
