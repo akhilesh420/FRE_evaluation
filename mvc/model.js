@@ -4,9 +4,10 @@ import { View } from './view.js'
 // ~~~~~~~~~~~~ Model ~~~~~~~~~~~~
 export const Model = ((api, view) => {
     class Todo {
-        constructor(content, completed) {
+        constructor(content, isCompleted, isEditing) {
             this.content = content;
-            this.completed = completed;
+            this.isCompleted = isCompleted;
+            this.isEditing = isEditing;
         }
     }
 
@@ -19,8 +20,8 @@ export const Model = ((api, view) => {
         set todolist(newtodolist) {
             this.#todolist = [...newtodolist];
 
-            const pending = this.todolist.filter((todo) => !todo.completed);
-            const completed = this.todolist.filter((todo) => todo.completed);
+            const pending = this.todolist.filter((todo) => !todo.isCompleted);
+            const completed = this.todolist.filter((todo) => todo.isCompleted);
 
             const pendingtodolistEle = document.querySelector(view.domstr.pendingContainer);
             const completedtodolistEle = document.querySelector(view.domstr.completedContainer);
@@ -29,6 +30,10 @@ export const Model = ((api, view) => {
             const complete_tmp = view.createTmp(completed);
             view.render(pendingtodolistEle, pending_tmp);
             view.render(completedtodolistEle, complete_tmp);
+        }
+
+        getTodo(id) {
+            return this.todolist.find(todo => +todo.id === +id);
         }
     }
 

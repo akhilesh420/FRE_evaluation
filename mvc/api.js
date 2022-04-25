@@ -6,15 +6,18 @@ export const Api = (() => {
     const getTodos = () =>
         fetch([baseUrl, path].join("/")).then((response) => response.json());
 
-    const editTodo = (id, updatedTodo) =>
+    const editTodo = (id, updatedTodo) => {
+        const todo = {...updatedTodo};
+        delete todo.isEditing;
         fetch([baseUrl, path, id].join("/"), {
             method: "PUT",
-            body: JSON.stringify(updatedTodo),
+            body: JSON.stringify(todo),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json());
+    }
 
     const deleteTodo = (id) =>
         fetch([baseUrl, path, id].join("/"), {

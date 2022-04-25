@@ -51,7 +51,7 @@ body {
     font-size: 48px;
 }
 
-input {
+input, textarea {
     all: unset;
     padding: 0px 10px;
     width: 20rem;
@@ -141,4 +141,18 @@ svg {
 
 .item-completed {
     text-decoration: line-through;
+}
+
+.edit-todo {
+    width: 100%;
+    border-radius: unset;
+    color: var(--color-light);
+    padding: 0px 8px;
+    border-bottom: unset;
+    font-size: unset;
+    white-space: pre-wrap;
+}
+
+.hide {
+    display: none;
 }

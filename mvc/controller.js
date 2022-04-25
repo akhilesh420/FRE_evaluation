@@ -9,7 +9,7 @@ export const Controller = ((model, view) => {
         const inputbox = document.querySelector(view.domstr.inputbox);
         inputbox.addEventListener("keyup", (event) => {
             if (event.key === "Enter") {
-                const newtodo = new model.Todo(event.target.value, true);
+                const newtodo = new model.Todo(event.target.value, false, false);
 
                 model.addTodo(newtodo).then(todo => {
                     state.todolist = [todo, ...state.todolist];
@@ -20,22 +20,81 @@ export const Controller = ((model, view) => {
     };
 
     const deleteTodo = () => {
-        const deleteButton = document.querySelector(view.domstr.deletebutton);
-        deleteButton.addEventListener("click", (event) => {
-            state.todolist = state.todolist.filter((todo) => +todo.id !== +this.id);
-            model.deleteTodo(id);
-        });
+        const deletebuttons = document.getElementsByClassName(view.domstr.deletebutton);
+
+        for (const deletebutton of deletebuttons) {
+            deletebutton.addEventListener("click", (event) => {
+                const id = event.currentTarget.id;
+                console.log(id);
+                state.todolist = state.todolist.filter((todo) => +todo.id !== +id);
+                model.deleteTodo(id);
+            });
+        }
     };
+
+    const updateTodo = () => {
+        const editbuttons = document.getElementsByClassName(view.domstr.editbutton);
+        const completebuttons = document.getElementsByClassName(view.domstr.completebutton);
+        const editInputs = document.getElementsByClassName(view.domstr.editinput);
+
+        for (const editbutton of editbuttons) {
+            editbutton.addEventListener("click", (event) => {
+                const id = event.currentTarget.id;
+                const todo = state.getTodo(id);
+                todo.isEditing = true;
+                const index = state.todolist.findIndex(todo => +todo.id === +id);
+                const list = state.todolist;
+                list[index] = todo;
+                state.todolist = list;
+            });
+        }
+
+        for (const input of editInputs) {
+            input.addEventListener("keyup", (event) => {
+                const id = event.currentTarget.id;
+                console.log(id);
+                const newtodo = new model.Todo(event.target.value, false, false);
+
+                model.editTodo(id, newtodo).then(todo => {
+                    console.log(todo);
+                    // state.todolist = todolist;
+                });
+                event.target.value = "";
+                // const todo = state.getTodo(id);
+                // todo.isEditing = true;
+                // const index = state.todolist.findIndex(todo => +todo.id === +id);
+                // const list = state.todolist;
+                // list[index] = todo;
+                // state.todolist = list;
+                // console.log(todo);
+            });
+        }
+
+        for (const completebutton of completebuttons) {
+            completebutton.addEventListener("click", (event) => {
+                const id = event.currentTarget.id;
+                const todo = state.getTodo(id);
+                todo.isCompleted = !todo.isCompleted;
+                const index = state.todolist.findIndex(todo => +todo.id === +id);
+                const list = state.todolist;
+                list[index] = todo;
+                state.todolist = list;
+                model.editTodo(id, todo);
+            });
+        }
+    }
 
     const init = () => {
         model.getTodos().then((todolist) => {
-            state.todolist = todolist.reverse();
+            state.todolist = todolist.map(todo => ({ ...todo, isEditing: false })).reverse();
+            console.log(state.todolist);
+            deleteTodo();
+            updateTodo();
         });
     };
 
     const bootstrap = () => {
         init();
-        deleteTodo();
         addTodo();
     };
 
