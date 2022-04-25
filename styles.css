@@ -1,0 +1,144 @@
+:root {
+    --header-height: 80px;
+
+    --todo-height: 200px;
+
+    --list-height: 500px;
+    --list-width: 400px;
+
+    --color-orange: #ED8366;
+    --color-light: #fcf4e4;
+    --color-dark: #4c5464;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--color-light);
+}
+
+::-webkit-scrollbar {
+    display: none;
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.col {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.row {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.header {
+    width: 100%;
+    height: var(--header-height);
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-orange);
+    color: var(--color-dark);
+    font-size: 48px;
+}
+
+input {
+    all: unset;
+    padding: 0px 10px;
+    width: 20rem;
+    border-radius: 2%;
+    outline: none;
+    color: var(--color-dark);
+    border-bottom: 1px solid var(--color-dark);
+    font-size: 24px;
+}
+
+.list-container {
+    padding: 24px;
+    gap: 24px;
+    justify-content: center;
+}
+
+.list {
+    width: var(--list-width);
+    height: var(--list-height);
+    background-color: var(--color-dark);
+    border-radius: 12px;
+    padding: 12px 12px;
+}
+
+.heading {
+    font-size: 24px;
+    color: var(--color-light);
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.todo-container {
+    width: 100%;
+}
+
+.todo {
+    width: 100%;
+    background-color: var(--color-orange);
+    padding-left: 12px;
+    padding-right: 4px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content:space-between;
+    margin-bottom: 8px;
+    flex-wrap: nowrap;
+}
+
+.todo-item {
+    color: var(--color-light);
+    padding: 0px 8px;
+}
+
+.todo-item-container {
+    flex-grow: 4;
+}
+
+.scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--color-dark);
+    background-color: var(--color-light);
+    cursor: pointer;
+}
+
+.complete {
+    background-color: var(--color-dark);
+    border: 2px solid var(--color-light);
+
+}
+
+.dlebtn, .editbtn {
+    height: 18px;
+    width: 18px;
+}
+
+svg {
+    height: 18px;
+    fill: var(--color-dark);
+    cursor: pointer;
+}
+
+.item-completed {
+    text-decoration: line-through;
+}
